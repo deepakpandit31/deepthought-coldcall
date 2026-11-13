@@ -1,111 +1,171 @@
-# CallPilot
+# CallPilot - AI-Powered Cold Calling Workspace
 
-**A guided cold-calling workspace powered by AI**
+CallPilot is a full-stack cold-calling workspace designed to help sales representatives manage conversations with prospects through a structured, stage-based workflow.
 
-CallPilot is a full-stack application designed to help sales representatives navigate structured cold calls, record prospect responses, track conversation outcomes, and manage follow-ups.
+The application organizes cold calls into eight stages, helping representatives understand prospect responses, capture their exact words, record objections, and identify suitable next steps.
 
-It provides an eight-stage calling workflow, persistent call history, and Gemini-powered AI assistance.
-
-## Live Application
-
-- **Frontend:** [Add your Vercel URL]
-- **Backend:** [Add your Render URL]
-- **Health Check:** [Add your Render health endpoint URL]
+It also integrates Google Gemini AI to provide real-time conversation suggestions and coaching during calls.
 
 ## Features
 
-- Eight-stage guided cold-calling workflow:
-  1. Opening
-  2. Purpose
-  3. Permission
-  4. Their Business
-  5. Their Need in Their Words
-  6. Objection
-  7. Next Step
-  8. Close
-- Stage-specific purpose and prospect response guidance.
-- Record stage outcomes and prospect's exact words.
-- Gemini AI call assistant that generates:
-  - Suggested responses
-  - Follow-up questions
-  - Coaching tips
-- Structured follow-up details including action, date, time, and channel.
-- Call history with the last stage reached and call outcome.
-- Supabase database persistence.
-- REST API built with Express.js.
+### 1. Structured 8-Stage Calling Workflow
+
+The application guides representatives through eight stages:
+
+1. **Opening** - Introduce yourself and establish the conversation.
+2. **Purpose** - Explain the reason for calling.
+3. **Permission** - Ask for permission to continue.
+4. **Their Business** - Understand the prospect's business.
+5. **Their Need in Their Words** - Capture the prospect's requirements and challenges.
+6. **Objection** - Understand and address objections.
+7. **Next Step** - Identify and record the follow-up action.
+8. **Close** - Complete the conversation and record its outcome.
+
+Each stage provides:
+- Stage purpose and guidance.
+- Typical prospect responses.
+- Available outcome options.
+- A field to capture the prospect's exact words.
+- Notes and stage progression.
+
+### 2. AI-Powered Assistance
+
+CallPilot integrates Google Gemini AI to assist representatives during conversations.
+
+AI assistance provides:
+- Suggested responses based on the current conversation.
+- Relevant follow-up questions.
+- Coaching tips for handling the conversation.
+
+The AI uses the current stage, its purpose, and conversation context to generate relevant suggestions.
+
+### 3. Call Management
+
+- Start a new call.
+- Record prospect and company information.
+- Save stage outcomes and prospect responses.
+- Track call progress.
+- Record follow-up actions, dates, and channels.
+- Close calls with an outcome.
+- View previous call records.
+
+### 4. Persistent Data Storage
+
+Supabase is used as the database to store:
+- Call information.
+- Calling stage definitions.
+- Stage outcomes.
+- Prospect's exact words.
+- Notes and follow-up information.
+- Call status and timestamps.
 
 ## Technology Stack
 
-| Layer | Technology |
+| Layer | Technologies |
 |---|---|
-| Frontend | Next.js, React, TypeScript, Tailwind CSS |
+| Frontend | Next.js, React, TypeScript |
+| Styling | Tailwind CSS |
 | Backend | Node.js, Express.js |
-| Database | Supabase PostgreSQL |
-| AI | Google Gemini API |
-| Frontend Hosting | Vercel |
-| Backend Hosting | Render |
-| Version Control | Git and GitHub |
+| Database | Supabase (PostgreSQL) |
+| AI Integration | Google Gemini API |
+| API Communication | REST API |
 
 ## Project Structure
 
 ```text
 deepthought-coldcall/
-├── frontend/
+│
 ├── backend/
+│   ├── ai.js
+│   ├── server.js
+│   ├── supabase.js
+│   ├── package.json
+│   └── package-lock.json
+│
+├── frontend/
+│   ├── src/
+│   │   ├── app/
+│   │   │   ├── page.tsx
+│   │   │   ├── layout.tsx
+│   │   │   └── globals.css
+│   │   │
+│   │   └── lib/
+│   │       ├── api.ts
+│   │       └── stages.ts
+│   │
+│   ├── public/
+│   ├── package.json
+│   └── tsconfig.json
+│
 ├── supabase/
 │   └── schema.sql
+│
 ├── .gitignore
 └── README.md
 ```
 
-## Local Setup
+## Getting Started
+
+Follow these steps to run the project locally.
 
 ### Prerequisites
 
-- Node.js and npm
-- Git
-- Supabase account
-- Google Gemini API key
+- Node.js
+- npm
+- A Supabase account and project
+- A Google Gemini API key
 
-### 1. Clone the repository
+### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/deepthought-coldcall.git
+git clone https://github.com/deepakpandit31/deepthought-coldcall.git
+
 cd deepthought-coldcall
 ```
 
-### 2. Configure the backend
+### 2. Configure the Backend
+
+Navigate to the backend directory:
 
 ```bash
 cd backend
 npm install
 ```
 
-Create a `.env` file inside `backend/`:
+Create a `.env` file inside the `backend` directory:
 
 ```env
 PORT=5000
+
 SUPABASE_URL=your_supabase_project_url
 SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_key
+
 GEMINI_API_KEY=your_gemini_api_key
+
 FRONTEND_URL=http://localhost:3000
 ```
 
-Run the backend:
+Replace the placeholder values with your own credentials.
+
+Start the backend:
 
 ```bash
 npm run dev
 ```
 
-Backend runs at `http://localhost:5000`.
-
-Health endpoint:
+The backend will run at:
 
 ```text
-http://localhost:5000/health
+http://localhost:5000
 ```
 
-### 3. Configure the frontend
+Health check:
+
+```text
+GET http://localhost:5000/health
+```
+
+### 3. Configure the Frontend
 
 Open another terminal:
 
@@ -114,90 +174,106 @@ cd frontend
 npm install
 ```
 
-Create `.env.local` inside `frontend/`:
+Create a `.env.local` file inside the `frontend` directory:
 
 ```env
 NEXT_PUBLIC_API_URL=http://localhost:5000
 ```
 
-Run the frontend:
+Start the frontend:
 
 ```bash
 npm run dev
 ```
 
-Open `http://localhost:3000`.
+Open the application:
 
-### 4. Configure Supabase
+```text
+http://localhost:3000
+```
 
-1. Create a Supabase project.
-2. Open the SQL Editor.
-3. Execute the SQL from `supabase/schema.sql`.
-4. Add the project URL and service role key to the backend environment variables.
+## Backend API Endpoints
 
-**Security:** Never commit `.env`, `.env.local`, service role keys, or Gemini API keys.
+Base URL:
 
-## API Endpoints
+```text
+http://localhost:5000
+```
 
-| Method | Endpoint | Purpose |
+| Method | Endpoint | Description |
 |---|---|---|
-| GET | `/health` | Backend health check |
-| GET | `/api` | API information |
-| POST | `/api/calls` | Start a call |
+| GET | `/health` | Check backend health |
+| GET | `/api` | Backend API information |
+| POST | `/api/calls` | Start a new call |
 | POST | `/api/calls/:callId/stages` | Save a stage result |
 | PATCH | `/api/calls/:callId/close` | Close a call |
 | GET | `/api/calls` | Retrieve call history |
-| POST | `/api/ai/assist` | Generate AI call assistance |
+| POST | `/api/ai/assist` | Get AI-powered assistance |
+
+## Database Design
+
+The application uses Supabase PostgreSQL with three main tables:
+
+### 1. calls
+
+Stores the main call information, including:
+- Prospect name
+- Company name
+- Phone number
+- Call status
+- Current stage
+- Call outcome
+- Follow-up information
+- Start and end timestamps
+
+### 2. call_stages
+
+Stores the eight predefined calling stages and their associated information.
+
+### 3. call_stage_results
+
+Stores the result of each completed stage, including:
+- Call ID
+- Stage ID
+- Stage outcome
+- Prospect's exact words
+- Notes
+- Timestamp
+
+The database uses relationships between calls, stages, and stage results to maintain conversation history.
 
 ## AI Integration
 
-CallPilot uses the Google Gemini API to provide contextual assistance during a call.
+**LLM Used:** Google Gemini
 
-The AI assistant considers the current call stage, its purpose, the prospect's exact words, and previous conversation context.
+**Purpose:** Real-time assistance during cold-calling conversations.
 
-It generates a suggested response, a relevant follow-up question, and a coaching tip.
+The backend sends the current stage information and conversation context to the Gemini API.
 
-AI suggestions are intended to assist the caller. The representative remains responsible for the actual conversation.
+The AI returns structured assistance containing:
 
-## Database
+- `suggested_response`
+- `follow_up_question`
+- `coaching_tip`
 
-Supabase PostgreSQL stores:
+This helps representatives respond more effectively while keeping the actual conversation under their control.
 
-- Calls and prospect details
-- The eight call stages
-- Stage outcomes
-- Prospect's exact words
-- Notes and call outcomes
-- Follow-up actions and scheduling information
+## Security
 
-The database schema is provided in `supabase/schema.sql`.
+- Environment variables are used for API keys and database credentials.
+- Sensitive configuration files are excluded through `.gitignore`.
+- Supabase service credentials are kept on the backend and are not exposed to the frontend.
 
-## Deployment
+Never commit your `.env` or `.env.local` files.
 
-### Frontend: Vercel
+## Author
 
-1. Import the GitHub repository into Vercel.
-2. Set the Root Directory to `frontend`.
-3. Configure `NEXT_PUBLIC_API_URL` with the deployed Render backend URL.
-4. Deploy the application.
+**Deepak Sikhwal**
 
-### Backend: Render
+GitHub: [@deepakpandit31](https://github.com/deepakpandit31)
 
-1. Create a new Web Service using the GitHub repository.
-2. Set the Root Directory to `backend`.
-3. Set the build command to `npm install`.
-4. Set the start command to `npm start`.
-5. Configure the required environment variables.
-6. Set `FRONTEND_URL` to the deployed Vercel URL.
-7. Deploy and verify `/health`.
+## Project
 
-## LLM Details
+CallPilot - AI-Powered Cold Calling Workspace
 
-- **LLM Provider:** Google
-- **Model:** Gemini
-- **Purpose:** Stage-aware call suggestions, follow-up questions, and real-time coaching assistance.
-
-## Assignment
-
-Built as a Forward Deployed Engineer practical assignment for DeepThought CultureTech.
-
+Built as a product assignment for DeepThought CultureTech.
